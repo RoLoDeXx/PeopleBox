@@ -3,6 +3,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Box,
+  Button,
   FormControl,
   InputAdornment,
   Input,
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = () => {
+const Search = ({ fetchLabels, items }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
@@ -109,8 +111,15 @@ const Search = () => {
             <form
               className={classes.form}
               onSubmit={() => {
-                alert("ga");
-                // localStorage.setItem("notes", JSON.stringify({ title, desc }))
+                localStorage.setItem(
+                  "notes",
+                  JSON.stringify([
+                    { title, desc, time: new Date().getTime() },
+                    ...items,
+                  ])
+                );
+                handleClose();
+                fetchLabels();
               }}
             >
               <Typography variant="h5">Add note</Typography>
@@ -128,6 +137,11 @@ const Search = () => {
                 className={classes.text}
                 onChange={(e) => setDesc(e.target.value)}
               />
+              <Box mt={2}>
+                <Button type="submit" variant="outlined" color="primary">
+                  Add note
+                </Button>
+              </Box>
             </form>
           </div>
         </Fade>

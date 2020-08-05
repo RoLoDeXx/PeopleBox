@@ -1,36 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import Search from "./Search";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Divider, Typography } from "@material-ui/core";
+import moment from "moment";
 
 const useStyles = makeStyles({
   p: {
     fontSize: "1rem",
     color: "#333333",
-    margin: "1rem 0 1.5rem 0",
+    margin: "1rem",
   },
   box: {
     minHeight: "85vh",
   },
 });
 
-const Labels = ({ items }) => {
+const Labels = ({ items, setDesc }) => {
+  const [labels, setLabels] = useState([]);
   const classes = useStyles();
-  const renderList = items.map((item) => (
-    <Box>
-      <Typography className={classes.p} component="p" variant="subtitle2">
-        {item}
-      </Typography>
-      <Typography variant="caption" component="p" align="right" gutterBottom>
-        Created x minutes ago
-      </Typography>
+
+  React.useEffect(() => {
+    let items = JSON.parse(localStorage.getItem("notes"));
+    if (items) setLabels(items);
+  }, []);
+
+  const fetchLabels = () => {
+    let items = JSON.parse(localStorage.getItem("notes"));
+    setLabels(items);
+  };
+
+  const renderList = labels.map((item) => (
+    <Box key={item.time}>
+      <Box mr={1} onClick={() => setDesc(item)}>
+        <Typography className={classes.p} component="p" variant="subtitle2">
+          {item.title}
+        </Typography>
+        <Typography variant="caption" component="p" align="right" gutterBottom>
+          Created {moment(item.time).fromNow()}
+        </Typography>
+      </Box>
       <Divider />
     </Box>
   ));
 
   return (
     <div className={classes.box}>
-      <Search />
+      <Search fetchLabels={fetchLabels} items={labels} />
       {renderList}
     </div>
   );

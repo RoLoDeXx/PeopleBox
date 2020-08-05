@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
 import Labels from "./Labels";
 import Description from "./Description";
@@ -14,31 +14,22 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Note = () => {
-  const [items, setItems] = React.useState([]);
+  let [desc, setDesc] = React.useState({});
   const classes = useStyles();
-  useEffect(() => {
-    // localStorage.getItem("hadam");
-    // return () => {
-    //     cleanup
-    // }
-  }, [items]);
 
-  // let items = [
-  //   "Physics Lecture Notes",
-  //   "Calculas Notes",
-  //   "Chemistry Notes",
-  //   "Exam Schedule",
-  //   "Semester Exam Syllabus",
-  // ];
+  let updateDesc = (item) => {
+    setDesc(item);
+    // setDesc({ title, body });
+  };
 
   return (
     <div className={classes.div}>
       <Grid container>
         <Grid item sm={4} className={classes.grid}>
-          <Labels items={items} />
+          <Labels setDesc={updateDesc} />
         </Grid>
         <Grid item sm={8}>
-          <Description />
+          <Description text={desc} />
         </Grid>
       </Grid>
     </div>
