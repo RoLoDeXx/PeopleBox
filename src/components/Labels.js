@@ -30,8 +30,8 @@ const Labels = ({ items, setDesc }) => {
   };
 
   const renderList = labels.map((item) => (
-    <Box key={item.time}>
-      <Box mr={1} onClick={() => setDesc(item)}>
+    <Box key={item.time} onClick={() => setDesc(item)}>
+      <Box mr={1}>
         <Typography className={classes.p} component="p" variant="subtitle2">
           {item.title}
         </Typography>

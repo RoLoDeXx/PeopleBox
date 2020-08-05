@@ -7,9 +7,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(() => ({
   div: {
     border: "1px solid",
+    marginTop: "2rem",
   },
   grid: {
-    borderRight: "1px solid ",
+    borderRight: "1px solid",
   },
 }));
 
